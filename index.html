@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gradientiser</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="backgroundgen.css" />
+  </head>
+  <body id="gradient">
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        color: rgba(0, 0, 0, 0.5);
+
+        /* text-transform: uppercase; */
+        /* top: 15%; */
+        background: linear-gradient(
+          to right,
+          red,
+          yellow
+        ); /* Standard syntax */
+      }
+      .container {
+        text-align: center;
+      }
+      h1 {
+        font-size: 4rem;
+        color: rgba(0, 0, 0);
+        text-align: center;
+        width: 100%;
+      }
+
+      .lable {
+        display: none;
+      }
+
+      input {
+        display: none;
+      }
+
+      button {
+        padding: 1em;
+        width: 200px;
+        height: 65px;
+        font-size: 1em;
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        border: 5px solid rgba(0, 0, 0, 0.5);
+        border-radius: 35px;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+    </style>
+
+    <div class="container">
+      <h1>Randomiser</h1>
+      <h2>
+        A cool random number generator that changes background gradient
+        everytime you use. It generate a random number between 0 to 1000.
+      </h2>
+      <h3 class="lable">color 1:</h3>
+      <input type="color" name="color1" value="#ff0000" id="c1" />
+      <h3 class="lable">color 2:</h3>
+      <input type="color" name="color2" value="#ffff00" id="c2" />
+      <h1 id="number"></h1>
+      <br />
+      <button id="random">click to get a random number</button>
+      <h2>
+        I am not able to implement the xorshift algorithm to generate the random
+        numbers, so I use the inbuilt math.random method.
+      </h2>
+    </div>
+    <script>
+      let color1 = document.getElementById("c1");
+      let color2 = document.getElementById("c2");
+      let num = document.getElementById("number");
+      let body = document.getElementById("gradient");
+      let button = document.getElementById("random");
+
+      function getRandomColor() {
+        let letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++)
+          color += letters[Math.floor(Math.random() * 16)];
+        return color;
+      }
+      function getRandomNumber() {
+        let nm = Math.floor(Math.random() * 1001);
+        num.textContent = nm;
+      }
+
+      function randomgradient() {
+        let randomColor1 = getRandomColor();
+        let randomColor2 = getRandomColor();
+        color1.value = randomColor1;
+        color2.value = randomColor2;
+        body.style.background =
+          "linear-gradient(to right, " +
+          randomColor1 +
+          ", " +
+          randomColor2 +
+          ")";
+      }
+
+      button.addEventListener("click", randomgradient);
+      button.addEventListener("click", getRandomNumber);
+      window.onload = randomgradient();
+      window.onload = getRandomNumber();
+    </script>
+  </body>
+</html>
